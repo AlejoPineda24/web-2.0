@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dulce Pecado · Gomitas enchiladas artesanales</title>
+  <meta name="description" content="Gomitas enchiladas artesanales con chamoy, tamarindo y chile. Listas para tu antojo, empacadas con amor desde 2026." />
+  <meta name="theme-color" content="#0D0D0D" />
+  <meta property="og:title" content="Dulce Pecado · Gomitas enchiladas" />
+  <meta property="og:description" content="Tierno, travieso y picosito. Pide por WhatsApp." />
+  <meta property="og:locale" content="es_CO" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body>
+  <div class="starfield" id="starfield"></div>
+
+  <nav class="nav">
+    <a href="#top" class="brand">
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Dulce Pecado" />
+      <span>Dulce Pecado</span>
+    </a>
+    <div class="nav-links">
+      <a href="#tamanos">Tamaños</a>
+      <a href="#sabores">Sabores</a>
+      <a href="#nosotros">Nosotros</a>
+      <button id="cart-toggle" class="cta cart-btn" type="button">
+        Pedir <span id="cart-count" class="cart-count">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Carrito lateral -->
+  <div id="cart-overlay" class="cart-overlay"></div>
+  <aside id="cart-panel" class="cart-panel" aria-hidden="true">
+    <div class="cart-head">
+      <h3>Tu carrito</h3>
+      <button id="cart-close" class="cart-close" type="button" aria-label="Cerrar carrito">×</button>
+    </div>
+    <div id="cart-items" class="cart-items">
+      <p class="cart-empty">Aún no has agregado nada. Elige un tamaño y un sabor, luego dale "Agregar al carrito".</p>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total">Total: <strong id="cart-total">$0</strong></div>
+      <a id="cart-wa-btn" class="btn wa" href="#" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+    </div>
+  </aside>
+
+  <header id="top" class="hero">
+    <div class="hero-left">
+      <span class="tag">Estamos · Desde 2026</span>
+      <h1>Gomitas <em>enchiladas</em><br/>con alma traviesa.</h1>
+      <p>Chamoy, tamarindo y chile, en porciones que no piden permiso. Listas para tu antojo, empacadas con amor.</p>
+      <a href="#pedido" class="btn">Armar mi pedido →</a>
+    </div>
+    <div class="hero-right">
+      <img src="{{ url_for('static', filename='img/mascota.png') }}" alt="Mascota Dulce Pecado" class="mascota" />
+    </div>
+  </header>
+
+  <div class="ticker"><div class="ticker-track">
+    {% for _ in range(2) %}
+      <span>· Dulce Pecado · Picante con amor · Chamoy · Tamarindo · Hecho a mano · Desde 2026 </span>
+    {% endfor %}
+  </div></div>
+
+  <section id="tamanos" class="section">
+    <span class="sec-num"> Clase de · Tamaños</span>
+    <h2>Elige tu dosis.</h2>
+    <div class="grid">
+      {% for s in sizes %}
+      <article class="card size-card" data-id="{{ s.id }}" data-name="{{ s.name }}" data-price="{{ s.price_num }}">
+        <h3>{{ s.name }}</h3>
+        <p class="weight">{{ s.weight }}</p>
+        <p class="price">{{ s.price }}</p>
+        <p class="muted">{{ s.desc }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="sabores" class="section">
+    <span class="sec-num">Tipos de · Sabores</span>
+    <h2>Del suave al infierno.</h2>
+    <div class="grid">
+      {% for f in flavors %}
+      <article class="card flavor-card" data-id="{{ f.id }}" data-name="{{ f.name }}">
+        <span class="level">{{ f.level }} {{ f.emoji }}</span>
+        <h3>{{ f.name }}</h3>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="nosotros" class="section manifesto">
+    <span class="sec-num">Historia · Manifiesto</span>
+    <div class="manifesto-grid">
+      <div>
+        <h2>Tierno, travieso<br/>y picosito.</h2>
+        <p>Somos un emprendimiento latino que cree que el dulce sin pecado aburre. Cada bolsa se empaca a mano, con chamoy real y chile que sí se siente.</p>
+      </div>
+      <div class="circle">
+        <span>DULCE<br/>PECADO<br/>· 2026 ·</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="pedido" class="section">
+    <span class="sec-num">Ordena · Tu pedido</span>
+    <h2>Arma tu antojo.</h2>
+    <div class="order">
+      <div>Tamaño: <strong id="out-size">—</strong></div>
+      <div>Sabor: <strong id="out-flavor">—</strong></div>
+      <button id="add-cart-btn" class="btn wa" type="button">Agregar al carrito</button>
+    </div>
+    <div class="qr-box">
+      <img src="{{ url_for('qr_code') }}" alt="Código QR para abrir esta web" />
+      <p>Escanea para abrir esta página</p>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" />
+    <p>© 2026 Dulce Pecado · Hecho con chamoy en LATAM.</p>
+  </footer>
+
+  <script>
+    window.WHATSAPP = "{{ whatsapp }}";
+  </script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
